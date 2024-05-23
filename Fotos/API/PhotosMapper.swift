@@ -9,10 +9,10 @@ import Foundation
 
 enum PhotosMapper {
     static func map(_ data: Data) async throws -> ListPhotos {
-        guard let books = try? JSONDecoder().decode(ListPhotos.self, from: data) else {
+        guard let photos = try? JSONDecoder().decode(ListPhotos.self, from: data) else {
              throw RemotePhotosLoader.Error.invalidData
         }
 
-        return books
+        return photos
     }
 }

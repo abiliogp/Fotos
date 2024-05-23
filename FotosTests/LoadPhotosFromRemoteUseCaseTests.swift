@@ -11,34 +11,33 @@ import XCTest
 final class LoadPhotosFromRemoteUseCaseTests: XCTestCase {
 
     func test_search_throwsWithInvalidJSON() async {
-        let (sut, client) = makeSUT()
+        let invalidJSON = Data("invalid json".utf8)
+        let sut = makeSUT(data: invalidJSON)
         
-        expect(sut, toCompleteWith: HTTPResult(error: RemotePhotosLoader.Error.invalidData, data: nil)) {
-            let invalidJSON = Data("invalid json".utf8)
-            client.result?.data = invalidJSON
-        }
+        expect(sut, expectedError: .invalidData)
     }
     
     func test_search_success() async {
-        let (sut, client) = makeSUT()
         let result = ListPhotos.make()
+        let sut = makeSUT(data: result.data)
         
-        expect(sut, toCompleteWith: HTTPResult(error: nil, data: result.data)) {
-            client.result?.data = result.data
-        }
+        expect(sut, expectedResult: result.result)
     }
 }
 
 private extension LoadPhotosFromRemoteUseCaseTests {
-    func expect(_ sut: RemotePhotosLoader, toCompleteWith: HTTPResult, action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+    func expect(_ sut: RemotePhotosLoader,
+                expectedResult: ListPhotos? = nil,
+                expectedError: RemotePhotosLoader.Error? = nil,
+                file: StaticString = #filePath, line: UInt = #line
+    ) {
         Task {
             do {
                 let result = try await sut.search(query: "iphone", page: 0)
-                XCTAssertNotNil(result, file: file, line: line)
+                XCTAssertEqual(result, expectedResult, file: file, line: line)
             } catch {
-                XCTAssertEqual(error.localizedDescription, RemotePhotosLoader.Error.invalidData.localizedDescription, file: file, line: line)
+                XCTAssertEqual(error.localizedDescription, expectedError?.localizedDescription, file: file, line: line)
             }
         }
-        action()
     }
 }

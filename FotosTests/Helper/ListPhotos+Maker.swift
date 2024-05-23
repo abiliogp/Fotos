@@ -65,3 +65,22 @@ extension ListPhotos {
         return (data, listPhotos)
     }
 }
+
+// - MARK: Equatable
+extension ListPhotos: Equatable {
+    public static func == (lhs: ListPhotos, rhs: ListPhotos) -> Bool {
+        return lhs.total == rhs.total &&
+               lhs.totalPages == rhs.totalPages &&
+               lhs.results == rhs.results
+    }
+}
+
+extension Photo: Equatable {
+    public static func == (lhs: Photo, rhs: Photo) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.slug == rhs.slug &&
+               lhs.width == rhs.width &&
+               lhs.height == rhs.height &&
+               lhs.description == rhs.description
+    }
+}

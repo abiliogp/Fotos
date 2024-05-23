@@ -9,9 +9,9 @@ import XCTest
 @testable import Fotos
 
 extension XCTest {
-    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: RemotePhotosLoader, client: MockHTTPClient) {
-        let client = MockHTTPClient()
-        let sut = RemotePhotosLoader(client: client)
-        return (sut, client)
+    func makeSUT(data: Data) -> RemotePhotosLoader {
+        let result = HTTPResult(error: nil, data: data)
+        let client = MockHTTPClient(result: result)
+        return RemotePhotosLoader(client: client)
     }
 }

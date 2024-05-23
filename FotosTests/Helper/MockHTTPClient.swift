@@ -14,15 +14,15 @@ struct HTTPResult {
 }
 
 class MockHTTPClient: HTTPClient {
-    var result: HTTPResult?
+    let result: HTTPResult
     
-    init(result: HTTPResult? = nil) {
+    init(result: HTTPResult) {
         self.result = result
     }
 
     func get(from url: URL) async throws -> Data {
-        guard let responseData = result?.data else {
-            throw result?.error ?? RemotePhotosLoader.Error.other
+        guard let responseData = result.data else {
+            throw result.error ?? RemotePhotosLoader.Error.other
         }
         return responseData
     }
