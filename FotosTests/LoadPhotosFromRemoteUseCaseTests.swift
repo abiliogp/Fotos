@@ -10,12 +10,21 @@ import XCTest
 
 final class LoadPhotosFromRemoteUseCaseTests: XCTestCase {
 
-    func test_load_throwsWithInvalidJSON() async {
+    func test_search_throwsWithInvalidJSON() async {
         let (sut, client) = makeSUT()
         
         expect(sut, toCompleteWith: HTTPResult(error: RemotePhotosLoader.Error.invalidData, data: nil)) {
             let invalidJSON = Data("invalid json".utf8)
             client.result?.data = invalidJSON
+        }
+    }
+    
+    func test_search_success() async {
+        let (sut, client) = makeSUT()
+        let result = ListPhotos.make()
+        
+        expect(sut, toCompleteWith: HTTPResult(error: nil, data: result.data)) {
+            client.result?.data = result.data
         }
     }
 }

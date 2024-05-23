@@ -20,6 +20,7 @@
 		E07FCF632BFF7111003F7649 /* LoadPhotosFromRemoteUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07FCF622BFF7111003F7649 /* LoadPhotosFromRemoteUseCaseTests.swift */; };
 		E07FCF652BFF7164003F7649 /* XCTestCase+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07FCF642BFF7164003F7649 /* XCTestCase+Helper.swift */; };
 		E07FCF682BFF71B0003F7649 /* MockHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07FCF672BFF71B0003F7649 /* MockHTTPClient.swift */; };
+		E07FCF6A2BFF750E003F7649 /* ListPhotos+Maker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07FCF692BFF750E003F7649 /* ListPhotos+Maker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		E07FCF622BFF7111003F7649 /* LoadPhotosFromRemoteUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPhotosFromRemoteUseCaseTests.swift; sourceTree = "<group>"; };
 		E07FCF642BFF7164003F7649 /* XCTestCase+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Helper.swift"; sourceTree = "<group>"; };
 		E07FCF672BFF71B0003F7649 /* MockHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHTTPClient.swift; sourceTree = "<group>"; };
+		E07FCF692BFF750E003F7649 /* ListPhotos+Maker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListPhotos+Maker.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 			children = (
 				E07FCF642BFF7164003F7649 /* XCTestCase+Helper.swift */,
 				E07FCF672BFF71B0003F7649 /* MockHTTPClient.swift */,
+				E07FCF692BFF750E003F7649 /* ListPhotos+Maker.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E07FCF652BFF7164003F7649 /* XCTestCase+Helper.swift in Sources */,
+				E07FCF6A2BFF750E003F7649 /* ListPhotos+Maker.swift in Sources */,
 				E07FCF632BFF7111003F7649 /* LoadPhotosFromRemoteUseCaseTests.swift in Sources */,
 				E07FCF682BFF71B0003F7649 /* MockHTTPClient.swift in Sources */,
 			);
