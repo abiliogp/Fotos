@@ -25,8 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         
-        window?.rootViewController = PhotosViewController()
-        
+        let remotePhotosLoader = RemotePhotosLoader(client: RemoteHTTPClient())
+        let viewModel = PhotosViewModel(photosLoader: remotePhotosLoader)
+        window?.rootViewController = PhotosViewController(viewModel: viewModel)
         window?.makeKeyAndVisible()
     }
 }
