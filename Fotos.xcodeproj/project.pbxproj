@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E018ACB42C00F703008B82B8 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E018ACB32C00F703008B82B8 /* ImageProcessor.swift */; };
 		E07FCF2A2BFF4693003F7649 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07FCF292BFF4693003F7649 /* AppDelegate.swift */; };
 		E07FCF2C2BFF4693003F7649 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07FCF2B2BFF4693003F7649 /* SceneDelegate.swift */; };
 		E07FCF332BFF4695003F7649 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E07FCF322BFF4695003F7649 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E018ACB32C00F703008B82B8 /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		E07FCF262BFF4693003F7649 /* Fotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E07FCF292BFF4693003F7649 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E07FCF2B2BFF4693003F7649 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E018ACB52C00F806008B82B8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E018ACB32C00F703008B82B8 /* ImageProcessor.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		E07FCF1D2BFF4693003F7649 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +112,7 @@
 				E07FCF342BFF4695003F7649 /* LaunchScreen.storyboard */,
 				E07FCF372BFF4695003F7649 /* Info.plist */,
 				E07FCF5B2BFF47DD003F7649 /* API */,
+				E018ACB52C00F806008B82B8 /* Services */,
 				E07FCF6D2BFF9DE6003F7649 /* View */,
 			);
 			path = Fotos;
@@ -249,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E07FCF612BFF6C70003F7649 /* PhotosMapper.swift in Sources */,
+				E018ACB42C00F703008B82B8 /* ImageProcessor.swift in Sources */,
 				E07FCF6F2BFF9E0B003F7649 /* PhotosViewModel.swift in Sources */,
 				E07FCF6C2BFF99BB003F7649 /* PhotosViewController.swift in Sources */,
 				E07FCF5F2BFF6C06003F7649 /* RemotePhotosLoader.swift in Sources */,
