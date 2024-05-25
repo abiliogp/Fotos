@@ -12,7 +12,7 @@ class PhotoItemCell: UITableViewCell {
     
     static let reuseIdentifier = "PhotoItemCell"
     
-    var viewModel: PhotoItemCellViewModel!
+    var viewModel: PhotoItemCellViewModel?
     
     private let padding: CGFloat = 16
     private let cornerRadius: CGFloat = 8
@@ -83,6 +83,12 @@ class PhotoItemCell: UITableViewCell {
             }
         }
         
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView?.image = nil
+        viewModel = nil
     }
     
     private func setupViews() {

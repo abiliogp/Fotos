@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PhotosViewController: UINavigationController {
+class PhotosViewController: UIViewController {
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -70,6 +70,7 @@ class PhotosViewController: UINavigationController {
     }
     
     private func setupView() {
+        self.title = "Photos"
         self.view.addSubview(activityIndicator)
         self.view.addSubview(searchBar)
         self.view.addSubview(tableView)
@@ -128,6 +129,7 @@ class PhotosViewController: UINavigationController {
                     guard let newIndexPaths = indexPaths else {
                         self.activityIndicator.stopAnimating()
                         self.tableView.isHidden = false
+                        self.tableView.setContentOffset(.zero, animated: true)
                         self.tableView.reloadData()
                         return
                     }
@@ -151,22 +153,30 @@ extension PhotosViewController:  UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: PhotoItemCell.reuseIdentifier) as? PhotoItemCell,
+        if let photoItemCell = tableView.dequeueReusableCell(withIdentifier: PhotoItemCell.reuseIdentifier) as? PhotoItemCell,
            let cellViewModel = viewModel.configureCell(for: indexPath.row){
-            cell.setViewModel(with: cellViewModel)
+            photoItemCell.setViewModel(with: cellViewModel)
             cellViewModel.loading()
-            return cell
+            return photoItemCell
         } else {
             return UITableViewCell()
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cellViewModel = viewModel.configureCell(for: indexPath.row) else { return }
-        cellViewModel.loadImage()
+        let photoItemCell = cell as? PhotoItemCell
+        photoItemCell?.viewModel?.loadImage()
         if indexPath.row == viewModel.total - 1 {
             viewModel.load()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.prepareForReuse()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.openViewCell(for: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

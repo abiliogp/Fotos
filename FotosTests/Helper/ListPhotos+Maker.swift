@@ -53,7 +53,16 @@ extension ListPhotos {
                             title: "singapore",
                             source: nil
                         )
-                    ]
+                    ], 
+                    user:
+                        User(
+                            username: "johndoe",
+                            name: "John Doe",
+                            firstName: "John",
+                            lastName: "Doe",
+                            bio: "Software Developer",
+                            location: "San Francisco, CA"
+                        )
                 )
             ]
         )

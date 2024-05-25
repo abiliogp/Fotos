@@ -8,18 +8,18 @@
 import Foundation
 import UIKit
 
-protocol ImageProcessorProtocol {
+protocol ImageProcessor {
     func downsample(imageAt imageURL: URL, to pointSize: CGSize) async throws -> UIImage
 }
 
-actor ImageProcessor: ImageProcessorProtocol {
+actor RemoteImageProcessor: ImageProcessor {
     
     enum Error: Swift.Error {
         case imageSourceCreationFailed
         case downsamplingFailed
     }
     
-    let scale: CGFloat
+    private let scale: CGFloat
     
     init(scale: CGFloat) {
         self.scale = scale

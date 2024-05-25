@@ -30,6 +30,7 @@ public struct Photo: Codable {
     let urls: PhotoUrls
     let links: ResultLinks
     let tags: [Tag]
+    let user: User
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -40,6 +41,7 @@ public struct Photo: Codable {
         case urls
         case links
         case tags
+        case user
     }
 }
 
@@ -97,5 +99,24 @@ public struct PhotoUrls: Codable {
         case small
         case thumb
         case smallS3 = "small_s3"
+    }
+}
+
+// MARK: - User
+struct User: Codable {
+    let username: String
+    let name: String
+    let firstName: String
+    let lastName: String?
+    let bio: String?
+    let location: String?
+
+    enum CodingKeys: String, CodingKey {
+        case username
+        case name
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case bio
+        case location
     }
 }

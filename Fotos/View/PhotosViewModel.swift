@@ -16,7 +16,8 @@ class PhotosViewModel {
     }
     
     var onUpdate: ((Status) -> Void)?
-    
+    weak var coordinatorDelegate: PhotoCoordinatorDelegate?
+
     private let photosLoader: PhotosLoader
     private var photos = [Photo]()
     
@@ -26,7 +27,6 @@ class PhotosViewModel {
     
     private(set) var isNewDataLoading = false
     
-    private var cellViewModels = [PhotoItemCellViewModel]()
     
     init(photosLoader: PhotosLoader) {
         self.photosLoader = photosLoader
@@ -37,15 +37,14 @@ class PhotosViewModel {
         total = 0
         currentQuery = ""
         photos.removeAll()
-        cellViewModels.removeAll()
         isNewDataLoading = false
+        onUpdate?(.ready(.none))
     }
     
     func search(query: String) {
         if currentQuery != query {
             clear()
             currentQuery = query
-            onUpdate?(.loading)
             load()
         }
     }
@@ -83,13 +82,13 @@ class PhotosViewModel {
     }
     
     func configureCell(for row: Int) -> PhotoItemCellViewModel? {
-        guard row < photos.count else { return .none }
-        if row < cellViewModels.count {
-            return cellViewModels[row]
-        }
-        let cellViewModel = PhotoItemCellViewModel(model: photos[row])
-        cellViewModels.append(cellViewModel)
-        return cellViewModel
+        let photo = photos[row]
+        return coordinatorDelegate?.configureCell(model: photo)
+    }
+    
+    func openViewCell(for row: Int) {
+        let photo = photos[row]
+        coordinatorDelegate?.openViewCell(model: photo)
     }
     
     private func indexPathsToReload(from newPhotos: [Photo]) -> [IndexPath] {
