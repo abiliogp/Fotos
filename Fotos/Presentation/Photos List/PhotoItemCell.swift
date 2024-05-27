@@ -12,7 +12,11 @@ class PhotoItemCell: UITableViewCell {
     
     static let reuseIdentifier = "PhotoItemCell"
     
-    var viewModel: PhotoItemCellViewModel?
+    var viewModel: PhotoItemCellViewModel? {
+        didSet {
+            setupViewBind()
+        }
+    }
     
     private let padding: CGFloat = 16
     private let cornerRadius: CGFloat = 8
@@ -53,44 +57,44 @@ class PhotoItemCell: UITableViewCell {
         setupViews()
         setupConstraints()
     }
-    
-    public func setViewModel(with modelView: PhotoItemCellViewModel) {
-        self.viewModel = modelView
-        setupViewBind()
-    }
-    
+
     private func setupViewBind() {
         self.viewModel?.onUpdate = { [weak self] status in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 switch status {
                 case .loading:
-                    self.activityIndicator.startAnimating()
-                    self.imageItem.isHidden = true
-                    self.textItem.isHidden = true
+                    self.showLoading()
                     
-                case let .ready(data):
-                    self.activityIndicator.stopAnimating()
-                    self.imageItem.isHidden = false
-                    self.textItem.isHidden = true
-                    self.imageItem.image = data
+                case let .ready(image):
+                    self.showImage()
+                    self.imageItem.image = UIImage(cgImage: image)
                     
                 case let .error(error):
-                    self.activityIndicator.stopAnimating()
+                    self.showText()
                     self.textItem.text = error.localizedDescription
-                    self.textItem.isHidden = false
                 }
             }
         }
-        
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        imageView?.image = nil
-        viewModel = nil
+    private func showLoading() {
+        self.activityIndicator.startAnimating()
+        self.imageItem.isHidden = true
+        self.textItem.isHidden = true
     }
     
+    private func showImage() {
+        self.activityIndicator.stopAnimating()
+        self.imageItem.isHidden = false
+        self.textItem.isHidden = true
+    }
+    
+    private func showText() {
+        self.activityIndicator.stopAnimating()
+        self.textItem.isHidden = false
+    }
+
     private func setupViews() {
         addSubview(textItem)
         addSubview(imageItem)

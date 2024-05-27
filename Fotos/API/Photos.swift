@@ -9,9 +9,9 @@ import Foundation
 
 // MARK: - ListPhotos
 public struct ListPhotos: Codable {
-    let total: Int
-    let totalPages: Int
-    let results: [Photo]
+    var total: Int
+    var totalPages: Int
+    var results: [Photo]
     
     enum CodingKeys: String, CodingKey {
         case total
@@ -22,15 +22,15 @@ public struct ListPhotos: Codable {
 
 // MARK: - Photo
 public struct Photo: Codable {
-    let id: String
-    let slug: String
-    let width: Int
-    let height: Int
-    let description: String?
-    let urls: PhotoUrls
-    let links: ResultLinks
-    let tags: [Tag]
-    let user: User
+    var id: String
+    var slug: String
+    var width: Int
+    var height: Int
+    var description: String?
+    var urls: PhotoUrls
+    var links: ResultLinks
+    var tags: [Tag]
+    var user: User
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -47,10 +47,10 @@ public struct Photo: Codable {
 
 // MARK: - ResultLinks
 public struct ResultLinks: Codable {
-    let linksSelf: String
-    let html: String
-    let download: String
-    let downloadLocation: String
+    var linksSelf: String
+    var html: String
+    var download: String
+    var downloadLocation: String
     
     enum CodingKeys: String, CodingKey {
         case linksSelf = "self"
@@ -62,17 +62,17 @@ public struct ResultLinks: Codable {
 
 // MARK: - Tag
 public struct Tag: Codable {
-    let title: String
-    let source: Source?
+    var title: String
+    var source: Source?
 }
 
 // MARK: - Source
 public struct Source: Codable {
-    let title: String
-    let subtitle: String
-    let description: String
-    let metaTitle: String
-    let metaDescription: String
+    var title: String
+    var subtitle: String
+    var description: String
+    var metaTitle: String
+    var metaDescription: String
     
     enum CodingKeys: String, CodingKey {
         case title
@@ -83,14 +83,14 @@ public struct Source: Codable {
     }
 }
 
-// MARK: - Urls
+// MARK: - PhotoUrls
 public struct PhotoUrls: Codable {
-    let raw: String
-    let full: String
-    let regular: String
-    let small: String
-    let thumb: String
-    let smallS3: String
+    var raw: String
+    var full: String
+    var regular: String
+    var small: String
+    var thumb: String
+    var smallS3: String
     
     enum CodingKeys: String, CodingKey {
         case raw
@@ -104,12 +104,12 @@ public struct PhotoUrls: Codable {
 
 // MARK: - User
 struct User: Codable {
-    let username: String
-    let name: String
-    let firstName: String
-    let lastName: String?
-    let bio: String?
-    let location: String?
+    var username: String
+    var name: String
+    var firstName: String
+    var lastName: String?
+    var bio: String?
+    var location: String?
 
     enum CodingKeys: String, CodingKey {
         case username

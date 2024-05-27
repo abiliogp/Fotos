@@ -15,37 +15,20 @@ final class PhotoItemCellViewModelTests: XCTestCase {
         let imageProcessor = MockImageProcessor()
         let viewModel = PhotoItemCellViewModel(model: photo, imageProcessor: imageProcessor)
         
-        let expectation = expectation(description: "onUpdate called")
-        
-        viewModel.onUpdate = { status in
-            if case .loading = status {
-                expectation.fulfill()
-            }
+        expect(viewModel, expectedResult: .loading) {
+            viewModel.loading()
         }
-        
-        viewModel.loading()
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testLoadImageSuccess() {
         let photo = ListPhotos.make().result.results.first!
-        let image = UIImage(systemName: "photo")! // Use a system image for testing
+        let image = CGImage.make()
         let imageProcessor = MockImageProcessor(image: image)
         let viewModel = PhotoItemCellViewModel(model: photo, imageProcessor: imageProcessor)
         
-        let expectation = expectation(description: "onUpdate called with ready status")
-        
-        viewModel.onUpdate = { status in
-            if case .ready(let receivedImage) = status {
-                XCTAssertEqual(receivedImage, image)
-                expectation.fulfill()
-            }
+        expect(viewModel, expectedResult: .ready(image)) {
+            viewModel.loadImage()
         }
-        
-        viewModel.loadImage()
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testLoadImageError() {
@@ -53,18 +36,19 @@ final class PhotoItemCellViewModelTests: XCTestCase {
         let imageProcessor = MockImageProcessor(shouldFail: true)
         let viewModel = PhotoItemCellViewModel(model: photo, imageProcessor: imageProcessor)
         
-        let expectation = expectation(description: "onUpdate called with error status")
-        
-        viewModel.onUpdate = { status in
-            if case .error(let error) = status {
-                XCTAssertEqual(error as? RemotePhotosLoader.Error, RemotePhotosLoader.Error.invalidData)
-                expectation.fulfill()
-            }
+        expect(viewModel, expectedResult: .error(NSError())) {
+            viewModel.loadImage()
         }
-        
-        viewModel.loadImage()
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
+    func testLoadImageErrorWhenURLNotValid() {
+        var photo = ListPhotos.make().result.results.first!
+        photo.links.download = ""
+        let imageProcessor = MockImageProcessor()
+        let viewModel = PhotoItemCellViewModel(model: photo, imageProcessor: imageProcessor)
+        
+        expect(viewModel, expectedResult: .error(NSError())) {
+            viewModel.loadImage()
+        }
+    }
 }

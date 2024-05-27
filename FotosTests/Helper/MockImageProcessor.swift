@@ -10,18 +10,18 @@ import UIKit
 @testable import Fotos
 
 class MockImageProcessor: ImageProcessor {
-    private let image: UIImage?
+    private let image: CGImage?
     private let shouldFail: Bool
     
-    init(image: UIImage? = nil, shouldFail: Bool = false) {
+    init(image: CGImage? = nil, shouldFail: Bool = false) {
         self.image = image
         self.shouldFail = shouldFail
     }
     
-    func downsample(imageAt url: URL, to size: CGSize) async throws -> UIImage {
+    func downsample(imageAt url: URL, to size: CGSize) async throws -> CGImage {
         if shouldFail {
             throw RemotePhotosLoader.Error.invalidData
         }
-        return image ?? UIImage()
+        return image ?? CGImage.make()
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 class PhotosViewModel {
     enum Status {
+        case start
         case empty
         case loading
         case ready([IndexPath]?)
@@ -16,7 +17,7 @@ class PhotosViewModel {
     }
     
     var onUpdate: ((Status) -> Void)?
-    weak var coordinatorDelegate: PhotoCoordinatorDelegate?
+    weak var coordinatorDelegate: PhotosCoordinatorDelegate?
 
     private let photosLoader: PhotosLoader
     private var photos = [Photo]()
@@ -30,6 +31,10 @@ class PhotosViewModel {
     
     init(photosLoader: PhotosLoader) {
         self.photosLoader = photosLoader
+    }
+    
+    func start() {
+        onUpdate?(.start)
     }
     
     private func clear() {
@@ -91,6 +96,11 @@ class PhotosViewModel {
         coordinatorDelegate?.openViewCell(model: photo)
     }
     
+    func updateCell(for row: Int, viewModel: PhotoItemCellViewModel) {
+        let photo = photos[row]
+        coordinatorDelegate?.updateCell(model: photo, viewModel: viewModel)
+    }
+
     private func indexPathsToReload(from newPhotos: [Photo]) -> [IndexPath] {
         let startIndex = photos.count - newPhotos.count
         let endIndex = startIndex + newPhotos.count

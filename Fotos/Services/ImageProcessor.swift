@@ -9,24 +9,27 @@ import Foundation
 import UIKit
 
 protocol ImageProcessor {
-    func downsample(imageAt imageURL: URL, to pointSize: CGSize) async throws -> UIImage
+    func downsample(imageAt imageURL: URL, to pointSize: CGSize) async throws -> CGImage
 }
 
 actor RemoteImageProcessor: ImageProcessor {
-    
     enum Error: Swift.Error {
         case imageSourceCreationFailed
         case downsamplingFailed
     }
     
     private let scale: CGFloat
+    private let imageCacheService: ImageCacheService
     
-    init(scale: CGFloat) {
+    init(scale: CGFloat, imageCacheService: ImageCacheService) {
         self.scale = scale
+        self.imageCacheService = imageCacheService
     }
     
-    func downsample(imageAt imageURL: URL, to pointSize: CGSize) async throws -> UIImage {
-        
+    func downsample(imageAt imageURL: URL, to pointSize: CGSize) async throws -> CGImage {
+        if let image = imageCacheService.get(key: imageURL.absoluteString) {
+            return image
+        }
         // Create an CGImageSource that represent an image
         let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
         guard let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, imageSourceOptions) else {
@@ -47,7 +50,8 @@ actor RemoteImageProcessor: ImageProcessor {
             throw Error.downsamplingFailed
         }
         
+        imageCacheService.store(key: imageURL.absoluteString, image: downsampledImage)
         // Return the downsampled image as UIImage
-        return UIImage(cgImage: downsampledImage)
+        return downsampledImage
     }
 }

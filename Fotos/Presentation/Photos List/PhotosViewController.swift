@@ -31,7 +31,7 @@ class PhotosViewController: UIViewController {
         searchBar.delegate = self
         searchBar.showsScopeBar = true
         searchBar.searchBarStyle = UISearchBar.Style.default
-        searchBar.placeholder = "Search Here..."
+        searchBar.placeholder = PhotosLocalized.placeholder
         searchBar.sizeToFit()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
@@ -70,7 +70,7 @@ class PhotosViewController: UIViewController {
     }
     
     private func setupView() {
-        self.title = "Photos"
+        self.title = PhotosLocalized.photosTitle
         self.view.addSubview(activityIndicator)
         self.view.addSubview(searchBar)
         self.view.addSubview(tableView)
@@ -114,36 +114,51 @@ class PhotosViewController: UIViewController {
             DispatchQueue.main.async {
                 guard let self = self else {return}
                 switch status {
+                case .start:
+                    self.showText()
+                    self.textItem.text = PhotosLocalized.start
+
                 case .empty:
-                    self.activityIndicator.stopAnimating()
-                    self.tableView.isHidden = true
-                    self.textItem.isHidden = false
-                    self.textItem.text = "No items for that search, please try another one!"
+                    self.showText()
+                    self.textItem.text = PhotosLocalized.empty
                     
                 case .loading:
-                    self.tableView.isHidden = true
-                    self.textItem.isHidden = true
-                    self.activityIndicator.startAnimating()
-                    
+                    self.showLoading()
+
                 case let .ready(indexPaths):
-                    guard let newIndexPaths = indexPaths else {
-                        self.activityIndicator.stopAnimating()
-                        self.tableView.isHidden = false
+                    self.showTableView()
+                    if let newIndexPaths = indexPaths {
+                        self.tableView.insertRows(at: newIndexPaths, with: .automatic)
+                    } else {
                         self.tableView.setContentOffset(.zero, animated: true)
                         self.tableView.reloadData()
-                        return
                     }
-                    self.activityIndicator.stopAnimating()
-                    self.tableView.isHidden = false
-                    self.tableView.insertRows(at: newIndexPaths, with: .automatic)
 
                 case let .error(error):
-                    self.activityIndicator.stopAnimating()
-                    self.textItem.isHidden = false
+                    self.showText()
                     self.textItem.text = error.localizedDescription
                 }
             }
         }
+        viewModel.start()
+    }
+    
+    private func showTableView() {
+        self.activityIndicator.stopAnimating()
+        self.textItem.isHidden = true
+        self.tableView.isHidden = false
+    }
+    
+    private func showText() {
+        self.activityIndicator.stopAnimating()
+        self.tableView.isHidden = true
+        self.textItem.isHidden = false
+    }
+    
+    private func showLoading() {
+        self.activityIndicator.startAnimating()
+        self.tableView.isHidden = true
+        self.textItem.isHidden = true
     }
 }
 
@@ -153,10 +168,14 @@ extension PhotosViewController:  UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let photoItemCell = tableView.dequeueReusableCell(withIdentifier: PhotoItemCell.reuseIdentifier) as? PhotoItemCell,
-           let cellViewModel = viewModel.configureCell(for: indexPath.row){
-            photoItemCell.setViewModel(with: cellViewModel)
-            cellViewModel.loading()
+        if let photoItemCell = tableView.dequeueReusableCell(withIdentifier: PhotoItemCell.reuseIdentifier) as? PhotoItemCell {
+            if let cellViewModel = photoItemCell.viewModel {
+                viewModel.updateCell(for: indexPath.row, viewModel: cellViewModel)
+                cellViewModel.loading()
+            } else if let cellViewModel = viewModel.configureCell(for: indexPath.row){
+                photoItemCell.viewModel = cellViewModel
+                cellViewModel.loading()
+            }
             return photoItemCell
         } else {
             return UITableViewCell()

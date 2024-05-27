@@ -14,16 +14,17 @@ protocol Coordinator {
     func start()
 }
 
-protocol PhotoCoordinatorDelegate: AnyObject {
+protocol PhotosCoordinatorDelegate: AnyObject {
     func configureCell(model: Photo) -> PhotoItemCellViewModel
+    func updateCell(model: Photo, viewModel: PhotoItemCellViewModel)
     func openViewCell(model: Photo)
 }
 
-class PhotoCoordinator: Coordinator {
+class PhotosCoordinator: Coordinator {
     let rootController: UINavigationController
 
     let remotePhotosLoader: RemotePhotosLoader
-    let imageProcessor: ImageProcessor
+    let imageCacheService: ImageCacheService
 
     init(window: UIWindow?) {
         self.rootController = UINavigationController()
@@ -31,7 +32,7 @@ class PhotoCoordinator: Coordinator {
         window?.makeKeyAndVisible()
         
         self.remotePhotosLoader = RemotePhotosLoader(client: RemoteHTTPClient())
-        self.imageProcessor = RemoteImageProcessor(scale: window?.screen.scale ?? UIScreen.main.scale)
+        self.imageCacheService = LocalImageCacheService()
     }
     
     func start() {
@@ -41,9 +42,15 @@ class PhotoCoordinator: Coordinator {
     }
 }
 
-extension PhotoCoordinator: PhotoCoordinatorDelegate {
+extension PhotosCoordinator: PhotosCoordinatorDelegate {
     func configureCell(model: Photo) -> PhotoItemCellViewModel {
+        let imageProcessor = RemoteImageProcessor(scale: UIScreen.main.scale, imageCacheService: imageCacheService)
         return PhotoItemCellViewModel(model: model, imageProcessor: imageProcessor)
+    }
+    
+    func updateCell(model: Photo, viewModel: PhotoItemCellViewModel) {
+        viewModel.cancelLoadImage()
+        viewModel.update(model: model)
     }
     
     func openViewCell(model: Photo) {

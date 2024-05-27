@@ -12,8 +12,6 @@ public protocol PhotosLoader {
 }
 
 public final class RemotePhotosLoader: PhotosLoader {
-    private let client: HTTPClient
-
     public enum Error: Swift.Error {
         case invalidData
         case invalidURL
@@ -32,6 +30,8 @@ public final class RemotePhotosLoader: PhotosLoader {
         case perPage = "per_page"
     }
     
+    private let client: HTTPClient
+
     public init(client: HTTPClient) {
         self.client = client
     }

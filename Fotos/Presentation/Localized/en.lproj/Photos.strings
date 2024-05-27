@@ -1,0 +1,17 @@
+"PHOTOS_LIST_TITLE" = "Photos";
+
+"PHOTOS_LIST_START" = "Please enter a search term!";
+"PHOTOS_LIST_EMPTY" = "No items found. Please try a different search.";
+
+"PHOTOS_LIST_SEARCH_PLACEHOLDER" = "Search...";
+
+"PHOTO_DETAIL_TITLE" = "Title: %@";
+"PHOTO_DETAIL_SOURCE" = "Source: %@";
+"PHOTO_DETAIL_USER" = "Taken by: %@";
+
+"REMOTE_LOADER_DATA_ERROR" = "Invalid data. Please try again later.";
+"REMOTE_LOADER_URL_ERROR" = "Invalid URL. Please try again later.";
+"GENERIC_ERROR" = "Unable to connect to the server.";
+
+"IMAGE_LOADER_DATA_ERROR" = "Please check your connection. Unable to create the image from the source.";
+"IMAGE_LOADER_DOWNSAMPLING_ERROR" = "Please check your connection. Unable to load the image.";
