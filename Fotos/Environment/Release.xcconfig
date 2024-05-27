@@ -1,0 +1,12 @@
+//
+//  Release.xcconfig
+//  Fotos
+//
+//  Created by Abilio Gambim Parada on 27/05/2024.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+API_ID = NHr5nmnvy4fJA0AtfpReQm_EI2SBnnvPajDObRtmYbY
+ENDPOINT = https:/$()/api.unsplash.com/search/photos

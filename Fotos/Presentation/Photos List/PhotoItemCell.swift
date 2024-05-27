@@ -25,9 +25,12 @@ class PhotoItemCell: UITableViewCell {
     
     private lazy var textItem: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.isAccessibilityElement = true
+        label.accessibilityHint = "Status text"
+        label.accessibilityLabel = "A text with the given status of photo cell"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -37,6 +40,9 @@ class PhotoItemCell: UITableViewCell {
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.layer.cornerRadius = cornerRadius
+        image.isAccessibilityElement = true
+        image.accessibilityHint = "Image"
+        image.accessibilityLabel = "A image with the given item of search"
         image.translatesAutoresizingMaskIntoConstraints = false
         image.sizeThatFits(CGSize.init(width: imageSize, height: imageSize))
         return image

@@ -10,31 +10,39 @@ import UIKit
 
 class PhotoDetailsViewController: UIViewController {
     private let padding: CGFloat = 16
-    private let fontSize: CGFloat = 18
     
     private lazy var textTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .left
         label.numberOfLines = 0
+        label.isAccessibilityElement = true
+        label.accessibilityHint = "Title Text"
+        label.accessibilityLabel = "A text with the given title of image"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var textSource: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .left
         label.numberOfLines = 0
+        label.isAccessibilityElement = true
+        label.accessibilityHint = "Source Text"
+        label.accessibilityLabel = "A text with the given source of image"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var textTakenBy: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .left
         label.numberOfLines = 0
+        label.isAccessibilityElement = true
+        label.accessibilityHint = "Taken By Text"
+        label.accessibilityLabel = "A text with the given author of image"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -59,6 +67,9 @@ class PhotoDetailsViewController: UIViewController {
     }
     
     private func setupView() {
+        view.backgroundColor = .systemBackground
+        title = PhotosLocalized.titleForPhotoDetail
+
         view.addSubview(textTitle)
         view.addSubview(textSource)
         view.addSubview(textTakenBy)

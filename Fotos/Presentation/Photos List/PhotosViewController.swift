@@ -21,6 +21,9 @@ class PhotosViewController: UIViewController {
         tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
+        tableView.accessibilityHint = "List"
+        tableView.accessibilityLabel = "A list of images for the given search"
+        tableView.isAccessibilityElement = true
         tableView.register(PhotoItemCell.self, forCellReuseIdentifier: PhotoItemCell.reuseIdentifier)
         return tableView
     }()
@@ -32,6 +35,9 @@ class PhotosViewController: UIViewController {
         searchBar.showsScopeBar = true
         searchBar.searchBarStyle = UISearchBar.Style.default
         searchBar.placeholder = PhotosLocalized.placeholder
+        searchBar.accessibilityHint = "Search"
+        searchBar.accessibilityLabel = "Enter your search here"
+        searchBar.isAccessibilityElement = true
         searchBar.sizeToFit()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
@@ -39,14 +45,16 @@ class PhotosViewController: UIViewController {
     
     private lazy var textItem: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.accessibilityHint = "Status text"
+        label.accessibilityLabel = "A text with the given status of photos list"
+        label.isAccessibilityElement = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    private let fontSize: CGFloat = 18
+
     private let cellHeight: CGFloat = 316
     private let padding: CGFloat = 16
 
@@ -79,7 +87,8 @@ class PhotosViewController: UIViewController {
     
     private func setupConstraints() {
         let safeArea = view.safeAreaLayoutGuide
-        
+        view.backgroundColor = .systemBackground
+
         NSLayoutConstraint.activate([
             activityIndicator.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             activityIndicator.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)

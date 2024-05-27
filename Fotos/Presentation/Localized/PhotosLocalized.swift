@@ -40,9 +40,17 @@ class PhotosLocalized {
             comment: "Search placeholder")
     }
     
-    static var titleForCell: String {
+    static var titleForPhotoDetail: String {
         NSLocalizedString(
             "PHOTO_DETAIL_TITLE",
+            tableName: "Photos",
+            bundle: Bundle(for: PhotosLocalized.self),
+            comment: "Title for Photo Detail")
+    }
+    
+    static var titleForCell: String {
+        NSLocalizedString(
+            "PHOTO_DETAIL_TEXT",
             tableName: "Photos",
             bundle: Bundle(for: PhotosLocalized.self),
             comment: "Title for details photos")

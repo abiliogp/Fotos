@@ -17,11 +17,6 @@ public final class RemotePhotosLoader: PhotosLoader {
         case invalidURL
         case other
     }
-    
-    private let clientId = "NHr5nmnvy4fJA0AtfpReQm_EI2SBnnvPajDObRtmYbY"
-    private enum Endpoint: String {
-        case search = "https://api.unsplash.com/search/photos"
-    }
 
     private enum QueryParameter: String {
         case query = "query"
@@ -37,12 +32,12 @@ public final class RemotePhotosLoader: PhotosLoader {
     }
     
     public func search(query: String, page: Int, perPage: Int = 10) async throws -> ListPhotos {
-        guard var url = URL(string: Endpoint.search.rawValue) else {
+        guard var url = URL(string: Environment.getValue(for: .endpoint)) else {
             throw Error.invalidURL
         }
         let queryItems = [
             URLQueryItem(name: QueryParameter.query.rawValue, value: query),
-            URLQueryItem(name: QueryParameter.clientId.rawValue, value: clientId),
+            URLQueryItem(name: QueryParameter.clientId.rawValue, value: Environment.getValue(for: .apiID)),
             URLQueryItem(name: QueryParameter.page.rawValue, value: String(page)),
             URLQueryItem(name: QueryParameter.perPage.rawValue, value: String(perPage))
         ]

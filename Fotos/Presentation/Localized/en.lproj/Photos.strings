@@ -5,7 +5,9 @@
 
 "PHOTOS_LIST_SEARCH_PLACEHOLDER" = "Search...";
 
-"PHOTO_DETAIL_TITLE" = "Title: %@";
+"PHOTO_DETAIL_TITLE" = "Photo Detail";
+
+"PHOTO_DETAIL_TEXT" = "Title: %@";
 "PHOTO_DETAIL_SOURCE" = "Source: %@";
 "PHOTO_DETAIL_USER" = "Taken by: %@";
 
