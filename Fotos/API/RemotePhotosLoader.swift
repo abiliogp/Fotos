@@ -7,12 +7,12 @@
 
 import Foundation
 
-public protocol PhotosLoader {
+protocol PhotosLoader {
     func search(query: String, page: Int, perPage: Int) async throws -> ListPhotos
 }
 
-public final class RemotePhotosLoader: PhotosLoader {
-    public enum Error: Swift.Error {
+final class RemotePhotosLoader: PhotosLoader {
+    enum Error: Swift.Error {
         case invalidData
         case invalidURL
         case other

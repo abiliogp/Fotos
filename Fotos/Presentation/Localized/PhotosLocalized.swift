@@ -9,106 +9,63 @@ import Foundation
 
 class PhotosLocalized {
     static var photosTitle: String {
-        NSLocalizedString(
-            "PHOTOS_LIST_TITLE",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Title for Photos List")
+        localizedString(forKey: "PHOTOS_LIST_TITLE", comment: "Title for Photos List")
     }
     
     static var start: String {
-        NSLocalizedString(
-            "PHOTOS_LIST_START",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "First string for start")
+        localizedString(forKey: "PHOTOS_LIST_START", comment: "First string for start")
     }
     
     static var empty: String {
-        NSLocalizedString(
-            "PHOTOS_LIST_EMPTY",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "String when list empty")
+        localizedString(forKey: "PHOTOS_LIST_EMPTY", comment: "String when list empty")
     }
     
     static var placeholder: String {
-        NSLocalizedString(
-            "PHOTOS_LIST_SEARCH_PLACEHOLDER",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Search placeholder")
+        localizedString(forKey: "PHOTOS_LIST_SEARCH_PLACEHOLDER", comment: "Search placeholder")
     }
     
     static var titleForPhotoDetail: String {
-        NSLocalizedString(
-            "PHOTO_DETAIL_TITLE",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Title for Photo Detail")
+        localizedString(forKey: "PHOTO_DETAIL_TITLE", comment: "Title for Photo Detail")
     }
     
     static var titleForCell: String {
-        NSLocalizedString(
-            "PHOTO_DETAIL_TEXT",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Title for details photos")
+        localizedString(forKey: "PHOTO_DETAIL_TEXT", comment: "Title for details photos")
     }
     
     static var sourceForCell: String {
-        NSLocalizedString(
-            "PHOTO_DETAIL_SOURCE",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Source for details photos")
+        localizedString(forKey: "PHOTO_DETAIL_SOURCE", comment: "Source for details photos")
     }
     
     static var userForCell: String {
-        NSLocalizedString(
-            "PHOTO_DETAIL_USER",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "User for details photos")
+        localizedString(forKey: "PHOTO_DETAIL_USER", comment: "User for details photos")
     }
     
     static var invalidDataError: String {
-        NSLocalizedString(
-            "REMOTE_LOADER_DATA_ERROR",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Invalid data error")
+        localizedString(forKey: "REMOTE_LOADER_DATA_ERROR", comment: "Invalid data error")
     }
     
     static var invalidUrlError: String {
-        NSLocalizedString(
-            "REMOTE_LOADER_URL_ERROR",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Invalid url error")
+        localizedString(forKey: "REMOTE_LOADER_URL_ERROR", comment: "Invalid url error")
     }
     
     static var genericError: String {
-        NSLocalizedString(
-            "GENERIC_ERROR",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Generic error")
+        localizedString(forKey: "GENERIC_ERROR", comment: "Generic error")
     }
     
     static var imageDataError: String {
-        NSLocalizedString(
-            "IMAGE_LOADER_DATA_ERROR",
-            tableName: "Photos",
-            bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Image loader error")
+        localizedString(forKey: "IMAGE_LOADER_DATA_ERROR", comment: "Image loader error")
     }
     
     static var imageDownsamplingError: String {
+        localizedString(forKey: "IMAGE_LOADER_DOWNSAMPLING_ERROR", comment: "Image downsampling error")
+    }
+    
+    private static func localizedString(forKey key: String, comment: String) -> String {
         NSLocalizedString(
-            "IMAGE_LOADER_DOWNSAMPLING_ERROR",
+            key,
             tableName: "Photos",
             bundle: Bundle(for: PhotosLocalized.self),
-            comment: "Image downsampling error")
+            comment: comment
+        )
     }
 }

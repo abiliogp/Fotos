@@ -26,6 +26,10 @@ class PhotoItemCellViewModel {
         self.imageProcessor = imageProcessor
     }
     
+    deinit {
+        cancelLoadImage()
+    }
+    
     func loading() {
         onUpdate?(.loading)
     }
@@ -55,6 +59,7 @@ class PhotoItemCellViewModel {
     
     func cancelLoadImage() {
         self.task?.cancel()
+        self.task = .none
     }
     
     func update(model: Photo) {

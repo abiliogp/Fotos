@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class PhotosViewController: UIViewController {
+    // MARK: - Properties
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +61,7 @@ class PhotosViewController: UIViewController {
 
     private var viewModel: PhotosViewModel
     
+    // MARK: - Initializers
     init(viewModel: PhotosViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -69,6 +71,7 @@ class PhotosViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,6 +80,7 @@ class PhotosViewController: UIViewController {
         setupMVVM()
     }
     
+    // MARK: - Setup Methods
     private func setupView() {
         self.title = PhotosLocalized.photosTitle
         self.view.addSubview(activityIndicator)
@@ -122,34 +126,35 @@ class PhotosViewController: UIViewController {
         viewModel.onUpdate = { [weak self] status in
             DispatchQueue.main.async {
                 guard let self = self else {return}
-                switch status {
-                case .start:
-                    self.showText()
-                    self.textItem.text = PhotosLocalized.start
-
-                case .empty:
-                    self.showText()
-                    self.textItem.text = PhotosLocalized.empty
-                    
-                case .loading:
-                    self.showLoading()
-
-                case let .ready(indexPaths):
-                    self.showTableView()
-                    if let newIndexPaths = indexPaths {
-                        self.tableView.insertRows(at: newIndexPaths, with: .automatic)
-                    } else {
-                        self.tableView.setContentOffset(.zero, animated: true)
-                        self.tableView.reloadData()
-                    }
-
-                case let .error(error):
-                    self.showText()
-                    self.textItem.text = error.localizedDescription
-                }
+                self.handleUpdate(status: status)
             }
         }
         viewModel.start()
+    }
+    
+    private func handleUpdate(status: PhotosViewModel.Status) {
+        switch status {
+        case .start:
+            self.showText(PhotosLocalized.start)
+
+        case .empty:
+            self.showText(PhotosLocalized.empty)
+            
+        case .loading:
+            self.showLoading()
+
+        case let .ready(indexPaths):
+            self.showTableView()
+            if let newIndexPaths = indexPaths {
+                self.tableView.insertRows(at: newIndexPaths, with: .automatic)
+            } else {
+                self.tableView.setContentOffset(.zero, animated: true)
+                self.tableView.reloadData()
+            }
+
+        case let .error(error):
+            self.showText(error.localizedDescription)
+        }
     }
     
     private func showTableView() {
@@ -158,10 +163,11 @@ class PhotosViewController: UIViewController {
         self.tableView.isHidden = false
     }
     
-    private func showText() {
-        self.activityIndicator.stopAnimating()
-        self.tableView.isHidden = true
-        self.textItem.isHidden = false
+    private func showText(_ text: String) {
+        activityIndicator.stopAnimating()
+        tableView.isHidden = true
+        textItem.isHidden = false
+        textItem.text = text
     }
     
     private func showLoading() {
@@ -171,24 +177,25 @@ class PhotosViewController: UIViewController {
     }
 }
 
+// MARK: - TableView
 extension PhotosViewController:  UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.total
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let photoItemCell = tableView.dequeueReusableCell(withIdentifier: PhotoItemCell.reuseIdentifier) as? PhotoItemCell {
-            if let cellViewModel = photoItemCell.viewModel {
-                viewModel.updateCell(for: indexPath.row, viewModel: cellViewModel)
-                cellViewModel.loading()
-            } else if let cellViewModel = viewModel.configureCell(for: indexPath.row){
-                photoItemCell.viewModel = cellViewModel
-                cellViewModel.loading()
-            }
-            return photoItemCell
-        } else {
+        guard let photoItemCell = tableView.dequeueReusableCell(withIdentifier: PhotoItemCell.reuseIdentifier) as? PhotoItemCell else {
             return UITableViewCell()
         }
+        
+        if let cellViewModel = photoItemCell.viewModel {
+            viewModel.updateCell(for: indexPath.row, viewModel: cellViewModel)
+            cellViewModel.loading()
+        } else if let cellViewModel = viewModel.configureCell(for: indexPath.row){
+            photoItemCell.viewModel = cellViewModel
+            cellViewModel.loading()
+        }
+        return photoItemCell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -200,7 +207,9 @@ extension PhotosViewController:  UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.prepareForReuse()
+        guard let photoItemCell = cell as? PhotoItemCell else { return }
+        photoItemCell.prepareForReuse()
+        photoItemCell.viewModel?.cancelLoadImage()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -212,6 +221,7 @@ extension PhotosViewController:  UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - SearchBar
 extension PhotosViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text {

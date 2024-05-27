@@ -23,16 +23,15 @@ protocol PhotosCoordinatorDelegate: AnyObject {
 class PhotosCoordinator: Coordinator {
     let rootController: UINavigationController
 
-    let remotePhotosLoader: RemotePhotosLoader
+    let remotePhotosLoader: PhotosLoader
     let imageCacheService: ImageCacheService
 
-    init(window: UIWindow?) {
+    init(window: UIWindow?, photosLoader: PhotosLoader, imageCacheService: ImageCacheService) {
+        self.remotePhotosLoader = photosLoader
+        self.imageCacheService = imageCacheService
         self.rootController = UINavigationController()
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
-        
-        self.remotePhotosLoader = RemotePhotosLoader(client: RemoteHTTPClient())
-        self.imageCacheService = LocalImageCacheService()
     }
     
     func start() {

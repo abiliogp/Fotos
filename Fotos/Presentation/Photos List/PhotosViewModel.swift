@@ -25,9 +25,7 @@ class PhotosViewModel {
     private(set) var currentPage = 1
     private(set) var total = 0
     private(set) var currentQuery = ""
-    
     private(set) var isNewDataLoading = false
-    
     
     init(photosLoader: PhotosLoader) {
         self.photosLoader = photosLoader
@@ -47,11 +45,10 @@ class PhotosViewModel {
     }
     
     func search(query: String) {
-        if currentQuery != query {
-            clear()
-            currentQuery = query
-            load()
-        }
+        guard currentQuery != query else { return }
+        clear()
+        currentQuery = query
+        load()
     }
     
     func load() {
@@ -87,16 +84,19 @@ class PhotosViewModel {
     }
     
     func configureCell(for row: Int) -> PhotoItemCellViewModel? {
+        guard row < photos.count else { return .none }
         let photo = photos[row]
         return coordinatorDelegate?.configureCell(model: photo)
     }
     
     func openViewCell(for row: Int) {
+        guard row < photos.count else { return }
         let photo = photos[row]
         coordinatorDelegate?.openViewCell(model: photo)
     }
     
     func updateCell(for row: Int, viewModel: PhotoItemCellViewModel) {
+        guard row < photos.count else { return }
         let photo = photos[row]
         coordinatorDelegate?.updateCell(model: photo, viewModel: viewModel)
     }

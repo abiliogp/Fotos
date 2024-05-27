@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class PhotoDetailsViewController: UIViewController {
+    // MARK: - Properties
     private let padding: CGFloat = 16
     
     private lazy var textTitle: UILabel = {
@@ -41,7 +42,7 @@ class PhotoDetailsViewController: UIViewController {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.isAccessibilityElement = true
-        label.accessibilityHint = "Taken By Text"
+        label.accessibilityHint = "Taken by"
         label.accessibilityLabel = "A text with the given author of image"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -49,6 +50,7 @@ class PhotoDetailsViewController: UIViewController {
     
     private var viewModel: PhotoDetailsViewModel
     
+    // MARK: - Initializers
     init(viewModel: PhotoDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -58,6 +60,7 @@ class PhotoDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,6 +69,7 @@ class PhotoDetailsViewController: UIViewController {
         setupMVVM()
     }
     
+    // MARK: - Setup Methods
     private func setupView() {
         view.backgroundColor = .systemBackground
         title = PhotosLocalized.titleForPhotoDetail

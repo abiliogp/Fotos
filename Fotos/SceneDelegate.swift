@@ -11,6 +11,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var photoCoordinator: PhotosCoordinator?
+    
+    var remotePhotosLoader: RemotePhotosLoader = {
+        let remotePhotosLoader = RemotePhotosLoader(client: RemoteHTTPClient())
+        return remotePhotosLoader
+    }()
+    
+    var imageCacheService: LocalImageCacheService = {
+        return LocalImageCacheService()
+    }()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -21,7 +30,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
 
-        photoCoordinator = PhotosCoordinator(window: window)
+        photoCoordinator = PhotosCoordinator(
+            window: window,
+            photosLoader: remotePhotosLoader,
+            imageCacheService: imageCacheService
+        )
         photoCoordinator?.start()
     }
 }
