@@ -35,7 +35,7 @@ class PhotosViewModel {
         onUpdate?(.start)
     }
     
-    private func clear() {
+    func clear() {
         currentPage = 1
         total = 0
         currentQuery = ""

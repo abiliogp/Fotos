@@ -8,7 +8,6 @@
 import Foundation
 
 public enum Environment {
-
     private static let infoDictionary: [String: Any] = {
         guard let dict = Bundle.main.infoDictionary else {
             fatalError("Plist file not found")

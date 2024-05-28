@@ -18,8 +18,8 @@ class PhotoDetailsViewController: UIViewController {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.isAccessibilityElement = true
-        label.accessibilityHint = "Title Text"
-        label.accessibilityLabel = "A text with the given title of image"
+        label.accessibilityHint = PhotosLocalized.detailTextHint
+        label.accessibilityLabel = PhotosLocalized.detailTextLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -30,8 +30,8 @@ class PhotoDetailsViewController: UIViewController {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.isAccessibilityElement = true
-        label.accessibilityHint = "Source Text"
-        label.accessibilityLabel = "A text with the given source of image"
+        label.accessibilityHint = PhotosLocalized.detailSourceHint
+        label.accessibilityLabel = PhotosLocalized.detailSourceLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -42,8 +42,8 @@ class PhotoDetailsViewController: UIViewController {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.isAccessibilityElement = true
-        label.accessibilityHint = "Taken by"
-        label.accessibilityLabel = "A text with the given author of image"
+        label.accessibilityHint = PhotosLocalized.detailUserHint
+        label.accessibilityLabel = PhotosLocalized.detailUserLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

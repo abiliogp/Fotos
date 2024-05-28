@@ -24,6 +24,30 @@ class PhotosLocalized {
         localizedString(forKey: "PHOTOS_LIST_SEARCH_PLACEHOLDER", comment: "Search placeholder")
     }
     
+    static var listHint: String {
+        localizedString(forKey: "PHOTOS_LIST_HINT", comment: "Search placeholder")
+    }
+    
+    static var listLabel: String {
+        localizedString(forKey: "PHOTOS_LIST_LABEL", comment: "Search placeholder")
+    }
+    
+    static var listSearchHint: String {
+        localizedString(forKey: "PHOTOS_LIST_SEARCH_HINT", comment: "Search placeholder")
+    }
+    
+    static var listSearchLabel: String {
+        localizedString(forKey: "PHOTOS_LIST_SEARCH_LABEL", comment: "Search placeholder")
+    }
+    
+    static var listTextHint: String {
+        localizedString(forKey: "PHOTOS_LIST_TEXT_HINT", comment: "Search placeholder")
+    }
+    
+    static var listTextLabel: String {
+        localizedString(forKey: "PHOTOS_LIST_TEXT_LABEL", comment: "Search placeholder")
+    }
+    
     static var titleForPhotoDetail: String {
         localizedString(forKey: "PHOTO_DETAIL_TITLE", comment: "Title for Photo Detail")
     }
@@ -38,6 +62,30 @@ class PhotosLocalized {
     
     static var userForCell: String {
         localizedString(forKey: "PHOTO_DETAIL_USER", comment: "User for details photos")
+    }
+    
+    static var detailTextHint: String {
+        localizedString(forKey: "PHOTO_DETAIL_TEXT_HINT", comment: "Search placeholder")
+    }
+    
+    static var detailTextLabel: String {
+        localizedString(forKey: "PHOTO_DETAIL_TEXT_LABEL", comment: "Search placeholder")
+    }
+    
+    static var detailSourceHint: String {
+        localizedString(forKey: "PHOTO_DETAIL_SOURCE_HINT", comment: "Search placeholder")
+    }
+    
+    static var detailSourceLabel: String {
+        localizedString(forKey: "PHOTO_DETAIL_SOURCE_LABEL", comment: "Search placeholder")
+    }
+    
+    static var detailUserHint: String {
+        localizedString(forKey: "PHOTO_DETAIL_USER_HINT", comment: "Search placeholder")
+    }
+    
+    static var detailUserLabel: String {
+        localizedString(forKey: "PHOTO_DETAIL_USER_LABEL", comment: "Search placeholder")
     }
     
     static var invalidDataError: String {

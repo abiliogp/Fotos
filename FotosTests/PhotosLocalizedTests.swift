@@ -10,56 +10,37 @@ import XCTest
 
 final class PhotosLocalizedTests: XCTestCase {
     
-    func testPhotosTitle() {
+    func testLocalizedPhotosList() {
         XCTAssertEqual(PhotosLocalized.photosTitle, "Photos")
-    }
-    
-    func testStart() {
         XCTAssertEqual(PhotosLocalized.start, "Please enter a search term!")
-    }
-    
-    func testEmpty() {
         XCTAssertEqual(PhotosLocalized.empty, "No items found. Please try a different search.")
-    }
-    
-    func testPlaceholder() {
         XCTAssertEqual(PhotosLocalized.placeholder, "Search...")
-    }
-    
-    func testTitleForPhotoDetail() {
         XCTAssertEqual(PhotosLocalized.titleForPhotoDetail, "Photo Detail")
+        XCTAssertEqual(PhotosLocalized.listHint, "List")
+        XCTAssertEqual(PhotosLocalized.listLabel, "A list of images for the given search")
+        XCTAssertEqual(PhotosLocalized.listSearchHint, "Search")
+        XCTAssertEqual(PhotosLocalized.listSearchLabel, "Enter your search here")
+        XCTAssertEqual(PhotosLocalized.listTextHint, "Status text")
+        XCTAssertEqual(PhotosLocalized.listTextLabel, "A text with the given status of photos list")
     }
     
-    func testTitleForCell() {
+    func testLocalizedPhotoDetail() {
         XCTAssertEqual(PhotosLocalized.titleForCell, "Title: %@")
-    }
-    
-    func testSourceForCell() {
         XCTAssertEqual(PhotosLocalized.sourceForCell, "Source: %@")
-    }
-    
-    func testUserForCell() {
         XCTAssertEqual(PhotosLocalized.userForCell, "Taken by: %@")
+        XCTAssertEqual(PhotosLocalized.detailTextHint, "Title Text")
+        XCTAssertEqual(PhotosLocalized.detailTextLabel, "A text with the given title of image")
+        XCTAssertEqual(PhotosLocalized.detailSourceHint, "Source Text")
+        XCTAssertEqual(PhotosLocalized.detailSourceLabel, "A text with the given source of image")
+        XCTAssertEqual(PhotosLocalized.detailUserHint, "Taken by")
+        XCTAssertEqual(PhotosLocalized.detailUserLabel, "A text with the given author of image")
     }
     
-    func testInvalidDataError() {
+    func testLocalizedError() {
         XCTAssertEqual(PhotosLocalized.invalidDataError, "Invalid data. Please try again later.")
-    }
-    
-    func testInvalidUrlError() {
         XCTAssertEqual(PhotosLocalized.invalidUrlError, "Invalid URL. Please try again later.")
-    }
-    
-    func testGenericError() {
         XCTAssertEqual(PhotosLocalized.genericError, "Unable to connect to the server.")
-    }
-    
-    func testImageDataError() {
         XCTAssertEqual(PhotosLocalized.imageDataError, "Please check your connection. Unable to create the image from the source.")
-    }
-    
-    func testImageDownsamplingError() {
         XCTAssertEqual(PhotosLocalized.imageDownsamplingError, "Please check your connection. Unable to load the image.")
     }
-    
 }

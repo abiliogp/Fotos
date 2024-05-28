@@ -5,11 +5,29 @@
 
 "PHOTOS_LIST_SEARCH_PLACEHOLDER" = "Search...";
 
+"PHOTOS_LIST_HINT" = "List";
+"PHOTOS_LIST_LABEL" = "A list of images for the given search";
+
+"PHOTOS_LIST_SEARCH_HINT" = "Search";
+"PHOTOS_LIST_SEARCH_LABEL" = "Enter your search here";
+
+"PHOTOS_LIST_TEXT_HINT" = "Status text";
+"PHOTOS_LIST_TEXT_LABEL" = "A text with the given status of photos list";
+
 "PHOTO_DETAIL_TITLE" = "Photo Detail";
 
 "PHOTO_DETAIL_TEXT" = "Title: %@";
 "PHOTO_DETAIL_SOURCE" = "Source: %@";
 "PHOTO_DETAIL_USER" = "Taken by: %@";
+
+"PHOTO_DETAIL_TEXT_HINT" = "Title Text";
+"PHOTO_DETAIL_TEXT_LABEL" = "A text with the given title of image";
+
+"PHOTO_DETAIL_SOURCE_HINT" = "Source Text";
+"PHOTO_DETAIL_SOURCE_LABEL" = "A text with the given source of image";
+
+"PHOTO_DETAIL_USER_HINT" = "Taken by";
+"PHOTO_DETAIL_USER_LABEL" = "A text with the given author of image";
 
 "REMOTE_LOADER_DATA_ERROR" = "Invalid data. Please try again later.";
 "REMOTE_LOADER_URL_ERROR" = "Invalid URL. Please try again later.";

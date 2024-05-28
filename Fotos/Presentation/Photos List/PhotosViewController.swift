@@ -22,8 +22,8 @@ class PhotosViewController: UIViewController {
         tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
-        tableView.accessibilityHint = "List"
-        tableView.accessibilityLabel = "A list of images for the given search"
+        tableView.accessibilityHint = PhotosLocalized.listHint
+        tableView.accessibilityLabel = PhotosLocalized.listLabel
         tableView.isAccessibilityElement = true
         tableView.register(PhotoItemCell.self, forCellReuseIdentifier: PhotoItemCell.reuseIdentifier)
         return tableView
@@ -36,8 +36,8 @@ class PhotosViewController: UIViewController {
         searchBar.showsScopeBar = true
         searchBar.searchBarStyle = UISearchBar.Style.default
         searchBar.placeholder = PhotosLocalized.placeholder
-        searchBar.accessibilityHint = "Search"
-        searchBar.accessibilityLabel = "Enter your search here"
+        searchBar.accessibilityHint = PhotosLocalized.listSearchHint
+        searchBar.accessibilityLabel = PhotosLocalized.listSearchLabel
         searchBar.isAccessibilityElement = true
         searchBar.sizeToFit()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -49,11 +49,17 @@ class PhotosViewController: UIViewController {
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.accessibilityHint = "Status text"
-        label.accessibilityLabel = "A text with the given status of photos list"
+        label.accessibilityHint = PhotosLocalized.listTextHint
+        label.accessibilityLabel = PhotosLocalized.listTextLabel
         label.isAccessibilityElement = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        return refreshControl
     }()
 
     private let cellHeight: CGFloat = 316
@@ -120,6 +126,8 @@ class PhotosViewController: UIViewController {
         
         textItem.setContentHuggingPriority(.defaultLow + 1, for: .vertical)
         textItem.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        
+        tableView.addSubview(refreshControl)
     }
     
     private func setupMVVM() {
@@ -145,6 +153,7 @@ class PhotosViewController: UIViewController {
 
         case let .ready(indexPaths):
             self.showTableView()
+            refreshControl.endRefreshing()
             if let newIndexPaths = indexPaths {
                 self.tableView.insertRows(at: newIndexPaths, with: .automatic)
             } else {
@@ -218,6 +227,13 @@ extension PhotosViewController:  UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return cellHeight
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        if let text = searchBar.text {
+            viewModel.clear()
+            viewModel.search(query: text)
+        }
     }
 }
 
