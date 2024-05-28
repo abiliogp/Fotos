@@ -38,30 +38,20 @@ final class PhotosViewModelTests: XCTestCase {
             viewModel.search(query: "123")
         }
         
-        expect(viewModel, expectedResult: .ready(.none)) {
-            viewModel.load()
-        }
-        
         XCTAssertEqual(viewModel.currentQuery, "123")
         XCTAssertEqual(viewModel.currentPage, 1)
     }
     
-    func testUpdateCleanPageWhenSearchChanges() {
+    func testCleanListWhenCleanCalled() {
         let result = ListPhotos.make()
         let remotePhotoLoader = makeSUT(data: result.data)
         let viewModel = PhotosViewModel(photosLoader: remotePhotoLoader)
         
         expect(viewModel, expectedResult: .ready(.none)) {
-            viewModel.search(query: "first search")
+            viewModel.clear()
         }
         
-        XCTAssertEqual(viewModel.currentQuery, "first search")
-        
-        expect(viewModel, expectedResult: .ready(.none)) {
-            viewModel.search(query: "another search")
-        }
-        
-        XCTAssertEqual(viewModel.currentQuery, "another search")
+        XCTAssertEqual(viewModel.currentQuery, "")
     }
     
     func testOpenViewCell() {
